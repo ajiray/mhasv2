@@ -34,7 +34,7 @@
             ->user()
             ->notSeenMessagesCount()" />
 
-        <div class="w-full h-full overflow-y-hidden">
+        <div class="w-full h-[87%] overflow-y-auto">
             @yield('content')
         </div>
 

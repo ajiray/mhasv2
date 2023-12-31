@@ -4,14 +4,15 @@ namespace App\Http\Controllers;
 
 use Carbon\Carbon;
 use App\Models\User;
+use App\Models\Summary;
 use App\Models\Appointment;
 use Illuminate\Http\Request;
+use App\Mail\StudentReschedMail;
 use App\Models\AcceptedAppointment;
+use App\Mail\RescheduleNotification;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\AppointmentAcceptedMail;
-use App\Mail\RescheduleNotification;
-use App\Mail\StudentReschedMail;
 
 class AppointmentController extends Controller
 {
@@ -20,7 +21,9 @@ class AppointmentController extends Controller
             'appointment_date' => 'required',
             'appointment_time' => 'required',
             'appointment_type' => 'required',
-            'appointment_reason' => 'required'
+            'appointment_reason' => 'required',
+            'recordingsession' => 'required'
+            
         ]);
     
         $appointmentDateTime = Carbon::parse($incomingFields['appointment_date'] . ' ' . $incomingFields['appointment_time']);
@@ -46,6 +49,7 @@ class AppointmentController extends Controller
             'type' => strip_tags($incomingFields['appointment_type']),
             'reason' => strip_tags($reason),
             'user_id' => auth()->id(),
+            'recording' => strip_tags($incomingFields['recordingsession']),
         ];
     
         Appointment::create($appointmentData);
@@ -127,15 +131,26 @@ public function declineAppointment(Appointment $appointment) {
 }
 
 
-public function markAsDone($appointment)
+public function markAsDone($appointmentId)
 {
-
-   
-    $appointment = Appointment::find($appointment);
-    $studentNumber = $appointment->user->student_number;
+    $appointment = Appointment::find($appointmentId);
 
     if ($appointment) {
+        // Store the data in the summary table
+        Summary::create([
+            'student_id' => $appointment->user_id,
+            'counselor_id' => $appointment->counselor_id,
+            'course' => $appointment->user->course,
+            'reason' => $appointment->reason,
+            'type' => $appointment->type,
+            'date' => $appointment->date,
+        ]);
+
+        // Delete the appointment and related accepted appointments
         $appointment->deleteWithAcceptedAppointments();
+
+        // Redirect or return the appropriate response
+        $studentNumber = $appointment->user->student_number;
         return view('counseling-records', ['studentNumber' => $studentNumber]);
     } else {
         // Handle the case where the appointment doesn't exist

@@ -192,7 +192,7 @@
             <img src="/images/profileM.png" alt="profile pic"
                 class="w-24 h-24 rounded-full object-cover border-2 border-maroon cursor-pointer relative"
                 id="profile" onclick="showProfile(event)">
-            <i class="fa-solid fa-chevron-down absolute text-black fa-md right-8 top-20 bg-slate-300 rounded-full px-1 py-1 cursor-pointer"
+            <i class="fa-solid fa-chevron-down absolute text-black fa-md right-12 top-20 bg-slate-300 rounded-full px-1 py-1 cursor-pointer"
                 onclick="showProfile(event)"></i>
 
         </div>

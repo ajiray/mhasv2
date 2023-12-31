@@ -24,6 +24,7 @@
                 event.preventDefault(); // Add this line to prevent the default form submission
             }
         }
+
         function confirmResched(appointmentId) {
             if (confirm('Are you sure you want to Resched this Appointment?')) {
                 document.getElementById('reschedStudent-form-' + appointmentId).submit();
@@ -102,13 +103,29 @@
                             required>
                     </div>
 
-                   <div class="mb-6">
+                    <div class="mb-6">
                         <label for="appointment_time" class="block text-gray-600">Appointment Time:</label>
                         <select name="appointment_time" id="appointment_time"
                             class="w-full border border-gray-300 p-3 rounded focus:outline-none focus:ring focus:border-blue-500"
                             required>
                             <!-- JavaScript will populate the options here -->
                         </select>
+                    </div>
+
+                    <div class="mb-6">
+                        <label class="block text-gray-600">Recording of the Session:</label>
+                        <div class="flex space-x-4">
+                            <label for="recordsession" class="flex items-center">
+                                <input type="radio" name="recordingsession" id="record" value="Record" class="mr-2"
+                                    required>
+                                Record The Session
+                            </label>
+                            <label for="donotrecord" class="flex items-center">
+                                <input type="radio" name="recordingsession" id="donotrecord" value="NoRecord"
+                                    class="mr-2" required>
+                                Do not Record
+                            </label>
+                        </div>
                     </div>
 
                     <div class="mb-6">
@@ -305,7 +322,7 @@
                 otherReasonInput.required = false;
             }
         }
-        
+
         document.addEventListener("DOMContentLoaded", function() {
             // Example: List of booked times from the database
             const bookedTimes = @json($bookedTimes);

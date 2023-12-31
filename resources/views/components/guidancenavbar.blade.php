@@ -204,7 +204,7 @@
         </div>
 
         <!-- Burger Menu -->
-        <x-burger />
+        <x-guidanceburger />
 
         <!-- Logo (mobile) -->
         <div class=" text-center flex py-4 items-center justify-center xl:hidden">

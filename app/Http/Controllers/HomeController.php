@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\Post;
 use App\Models\User;
+use App\Models\Event;
 use App\Models\Quote;
 use App\Models\Comment;
+use App\Models\Summary;
 use App\Models\Resource;
 use App\Models\Appointment;
 use App\Models\PendingUser;
@@ -34,9 +36,14 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function index(Request $request) {
-    return view('dashboard');
-}   
+    public function index(Request $request)
+{
+    $events = Event::where('date', '>=', now())->orderBy('date')->get();
+    $counselors = User::whereIn('is_admin', [1, 2])->where('online', 1)->get();
+
+    return view('dashboard', compact('events', 'counselors'));
+}
+
     public function messagegoback() {
     $user = Auth::user();
 
@@ -105,9 +112,8 @@ class HomeController extends Controller
     
 
     public function profile() {
-        $user = Auth::user();
-        $posts = Post::where('user_id', $user->id)->get();
-        return view('profile', ['posts' => $posts],['users' => $user]);
+       
+        return view('profile');
     }
 
     public function resources() {
@@ -163,26 +169,6 @@ class HomeController extends Controller
         return view('adminresources', ['resources' => $resources]);
     }
 
-    public function registerGuidance(Request $request) {
-        // Validate the incoming request data
-        $validatedData = $request->validate([
-            'fullname' => 'required|string|max:255',
-            'email' => 'required|email|unique:users',
-            'password' => 'required|string|min:8',
-            'userType' => 'required|integer', // Assuming userType is an integer
-        ]);
-    
-        // Create a new user in the database
-        $user = User::create([
-            'firstname' => $validatedData['fullname'],
-            'email' => $validatedData['email'],
-            'password' => bcrypt($validatedData['password']),
-            'is_admin' => $validatedData['userType'],
-        ]);
-    
-        return redirect()->route('newUser')->with(['successs' => 'Account created successfully.']);
-    }
-
     public function guidancedashboard() {
         return view('guidancedashboard');
     }
@@ -234,30 +220,71 @@ class HomeController extends Controller
     public function policy() {
         return view('policy');
     }
+    public function summary()
+    {
+        // Get all users with is_admin equal to 1 or 2
+        $counselors = User::whereIn('is_admin', [1, 2])->get();
 
-    public function registerstudent(Request $request) {
+        $programs = Summary::distinct('course')->pluck('course');
+
+        $reasons = Summary::distinct('reason')->pluck('reason');
+    
+        $summaries = Summary::all(); // You may need to adjust this based on your logic
+        $totalSummaries = Summary::count();
+    
+        return view('summary', ['summaries' => $summaries, 'counselors' => $counselors, 'programs' => $programs, 'reasons' => $reasons, 'totalSummaries' => $totalSummaries]);
+    }
+
+    public function registerGuidance(Request $request) {
+
+        
         // Validate the incoming request data
         $validatedData = $request->validate([
-            'firstname' => 'required|string|max:255',
-            'middlename' => 'required|string|max:255',
-            'lastname' => 'required|string|max:255',
-            'studnum' => 'required|string|max:255',
             'email' => 'required|email|unique:users',
+            'fullname' => 'nullable|string|max:255',
+            'password' => 'nullable|string|min:8',
+            'firstname' => 'nullable|string|max:255',
+            'middlename' => 'nullable|string|max:255',
+            'lastname' => 'nullable|string|max:255',
+            'studnum' => 'nullable|string|max:255',
+            'course' => 'nullable|string|max:255',
+            'userType' => 'required|integer',
         ]);
+        
+        // Create a new user in the database based on is_admin
+        
+        if ($validatedData['userType'] == 1 || $validatedData['userType'] == 2) {
 
-        // Create a new user in the database
-        $password = bcrypt($validatedData['lastname']);
-        User::create([
-            'firstname' => $validatedData['firstname'],
-            'middlename' => $validatedData['middlename'],
-            'lastname' => $validatedData['lastname'],
-            'student_number' => $validatedData['studnum'],
-            'email' => $validatedData['email'],
-            'password' => $password,
-        ]);
-
-        return redirect()->route('addstudents')->with(['successs' => 'Account created successfully.']);
+            $password = bcrypt($validatedData['password']);
+            // Guidance or admin registration
+            User::create([
+                'firstname' => $validatedData['fullname'],
+                'email' => $validatedData['email'],
+                'password' => $password,
+                'is_admin' => $validatedData['userType'],
+            ]);
+            
+    
+            return redirect()->back()->with(['successs' => 'Account created successfully.']);
+        } else {
+            
+            // Student registration
+            $password = bcrypt($validatedData['lastname']); // Use last name as password
+            User::create([
+                'firstname' => $validatedData['firstname'],
+                'middlename' => $validatedData['middlename'],
+                'lastname' => $validatedData['lastname'],
+                'email' => $validatedData['email'],
+                'student_number' => $validatedData['studnum'],
+                'course' => $validatedData['course'],
+                'is_admin' => $validatedData['userType'],
+                'password' => $password,
+            ]);
+            
+            return redirect()->back()->with(['successs' => 'Student account created successfully.']);
+        }
     }
+    
     public function addstudents() {
         return view('adminaddnewstudent');
     }

@@ -49,7 +49,7 @@
 </head>
 
 <body>
-    <nav class="bg-adminPrimary flex items-center justify-between xl:w-full xl:bg-adminPrimary">
+    <nav class="bg-adminPrimary flex items-center justify-between xl:w-full xl:bg-adminPrimary h-[13%]">
         <div class="w-60 h-auto bg-white absolute top-24 z-10 right-10 rounded-md border border-gray-300 hidden"
             id="logout">
             <a href="/profile"
@@ -124,20 +124,20 @@
                     </a>
                 </div>
 
-                <div id="home" class="@if (request()->is('showrecordings')) active @endif">
-                    <a href="/showrecordings">
+                <div id="summary" class="@if (request()->is('summary')) active @endif">
+                    <a href="/summary">
                         <div class="flex gap-2 items-center">
-                            <i class="fa-solid fa-video fa-md text-accent"></i>
-                            <p class="text-accent text-sm">ScreenRecordings</p>
+                            <i class="fa-solid fa-rectangle-list fa-md text-accent"></i>
+                            <p class="text-accent text-sm">SummaryReport</p>
                         </div>
                     </a>
                 </div>
 
-                <div id="home" class="@if (request()->is('addstudents')) active @endif">
-                    <a href="/addstudents">
+                <div id="events" class="@if (request()->is('events')) active @endif">
+                    <a href="/events">
                         <div class="flex gap-2 items-center">
-                            <i class="fa-solid fa-video fa-md text-accent"></i>
-                            <p class="text-accent text-sm">addstudent</p>
+                            <i class="fa-solid fa-clipboard fa-md text-accent"></i>
+                            <p class="text-accent text-sm">Events</p>
                         </div>
                     </a>
                 </div>
@@ -216,16 +216,17 @@
 
 
             </div>
-            <img src="/images/profileM.png" alt="profile pic"
-                class="w-24 h-24 rounded-full object-cover border-2 border-adminPrimary cursor-pointer relative"
-                id="profile" onclick="showProfile(event)">
-            <i class="fa-solid fa-chevron-down absolute text-black fa-md right-8 top-20 bg-slate-300 rounded-full px-1 py-1 cursor-pointer"
-                onclick="showProfile(event)"></i>
-
+            <div class="relative">
+                <img src="/images/profileM.png" alt="profile pic"
+                    class="w-24 h-24 rounded-full object-cover border-2 border-adminPrimary cursor-pointer relative"
+                    id="profile" onclick="showProfile(event)">
+                <i class="fa-solid fa-chevron-down absolute text-black fa-md right-[5px] top-[70px] bg-slate-300 rounded-full px-1 py-1 cursor-pointer"
+                    onclick="showProfile(event)"></i>
+            </div>
         </div>
 
         <!-- Burger Menu -->
-        <x-burger />
+        <x-adminburger />
 
         <!-- Logo (mobile) -->
         <div class=" text-center flex py-4 items-center justify-center xl:hidden">

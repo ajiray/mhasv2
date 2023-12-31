@@ -8,14 +8,14 @@
         <link rel="stylesheet" href="resources/js/bootstrap.js">
         <style>
             .card {
-                width: 90%; 
-    max-width: 900px; 
-    height: 700px;
-    margin: 20px auto; 
-    border-radius: 8px;
-    z-index: 1;
-    padding:20px;
-    margin-top:100px;
+                width: 90%;
+                max-width: 900px;
+                height: 700px;
+                margin: 20px auto;
+                border-radius: 8px;
+                z-index: 1;
+                padding: 20px;
+                margin-top: 100px;
             }
 
             .tools {
@@ -50,42 +50,47 @@
             }
 
             /* Styles for the modal */
-            
+
             .modal {
-        display: none;
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-color: rgba(0, 0, 0, 0.5);
-        justify-content: center;
-        align-items: center;
-    }
+                display: none;
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background-color: rgba(0, 0, 0, 0.5);
+                justify-content: center;
+                align-items: center;
+            }
 
-    .modal-content {
-        background-color: #fff;
-        padding: 20px;
-        border-radius: 8px;
-        overflow: auto; /* Add overflow property */
-        max-height: 80vh; /* Set a maximum height */
-        width: 100%; /* Set full width */
-    }
+            .modal-content {
+                background-color: #fff;
+                padding: 20px;
+                border-radius: 8px;
+                overflow: auto;
+                /* Add overflow property */
+                max-height: 80vh;
+                /* Set a maximum height */
+                width: 100%;
+                /* Set full width */
+            }
 
-    /* Add media query for mobile view */
-    @media only screen and (max-width: 767px) {
-        .modal-content {
-            height: 100%; /* Set full height on mobile view */
-            max-height: none; /* Remove max-height on mobile view */
-        }
+            /* Add media query for mobile view */
+            @media only screen and (max-width: 767px) {
+                .modal-content {
+                    height: 100%;
+                    /* Set full height on mobile view */
+                    max-height: none;
+                    /* Remove max-height on mobile view */
+                }
 
-        /* Make child elements display in one column */
-        .modal-content > * {
-            width: 100%;
-            box-sizing: border-box;
-            margin-bottom: 12px;
-        }
-    }
+                /* Make child elements display in one column */
+                .modal-content>* {
+                    width: 100%;
+                    box-sizing: border-box;
+                    margin-bottom: 12px;
+                }
+            }
 
             .close {
                 color: #aaa;
@@ -100,6 +105,7 @@
                 text-decoration: none;
                 cursor: pointer;
             }
+
             .modal-container {
                 display: none;
                 position: fixed;
@@ -113,12 +119,14 @@
             }
 
             .modal-content-container {
-        background-color: #fff;
-        padding: 20px;
-        border-radius: 8px;
-        overflow: auto; /* Add overflow property */
-        max-height: 80vh; /* Set a maximum height */
-    }
+                background-color: #fff;
+                padding: 20px;
+                border-radius: 8px;
+                overflow: auto;
+                /* Add overflow property */
+                max-height: 80vh;
+                /* Set a maximum height */
+            }
 
             .modal-label {
                 display: block;
@@ -153,31 +161,30 @@
                 right: 10px;
                 cursor: pointer;
             }
-            
         </style>
     </head>
 
     <body>
         <div
-        class="card bg-gradient-to-b {{ Auth::user()->is_admin == 1 ? 'from-adminPrimary to-gradientBlue' : (Auth::user()->is_admin == 2 ? 'from-guidancePrimary to-orange-950' : '') }}">
+            class="card bg-gradient-to-b {{ Auth::user()->is_admin == 1 ? 'from-adminPrimary to-gradientBlue' : (Auth::user()->is_admin == 2 ? 'from-guidancePrimary to-orange-950' : '') }}">
 
-        <div class="tools">
-            <div class="circle">
-                <span class="red box"></span>
+            <div class="tools">
+                <div class="circle">
+                    <span class="red box"></span>
+                </div>
+                <div class="circle">
+                    <span class="yellow box"></span>
+                </div>
+                <div class="circle">
+                    <span class="green box"></span>
+                </div>
             </div>
-            <div class="circle">
-                <span class="yellow box"></span>
+            <div class="flex items-start justify-center">
+                <h1 class="font-bold text-white p-4 font-serif text-xl md:text-3xl">
+                    Guidance Counseling Records
+                </h1>
             </div>
-            <div class="circle">
-                <span class="green box"></span>
-            </div>
-        </div>
-        <div class="flex items-start justify-center">
-<h1 class="font-bold text-white p-4 font-serif text-xl md:text-3xl">
-    Guidance Counseling Records
-</h1>
-</div>
-             @if (isset($studentNumber))
+            @if (isset($studentNumber))
                 <x-searchforstudents :studentNumber="$studentNumber" />
             @else
                 <x-searchforstudents />
@@ -220,10 +227,13 @@
                     <h2 class="text-lg font-semibold">Counseling Records for Student: {{ $studentNumber }}</h2>
                     <div class="border p-4 mt-2">
                         <!-- Additional details about the student -->
-                        <p><strong>Name:</strong> {{ $user->name }}</p>
+                        <p><strong>Name:</strong> {{ $user->firstname }}
+                            @if ($user->middlename)
+                                {{ $user->middlename }}
+                            @endif
+                            {{ $user->lastname }}
+                        </p>
                         <p><strong>Course:</strong> {{ $user->course }}</p>
-                        <p><strong>Age:</strong> {{ $user->age }}</p>
-                        <p><strong>Birthday:</strong> {{ $user->birthday }}</p>
                         <!-- Add other fields as needed -->
                     </div>
                     @if (isset($counselingRecords) && !$counselingRecords->isEmpty())
@@ -233,10 +243,11 @@
                                 @foreach ($counselingRecords as $record)
                                     <li class="list-group-item">
                                         <!-- Make the date a link to view the record details -->
-                                        <a href="javascript:void(0);" onclick="openModal('{{ $record->id }}', '{{ $record->user->name }}', '{{ $record->counseled_by }}', '{{ $record->findings }}', '{{ $record->present_conditions }}', '{{ $record->conclusions }}', '{{ $record->recommendations }}', '{{ $record->difficulties }}', '{{ $record->background_of_study }}')">
+                                        <a href="javascript:void(0);"
+                                            onclick="openModal('{{ $record->id }}', '{{ $record->user->name }}', '{{ $record->counseled_by }}', '{{ $record->findings }}', '{{ $record->present_conditions }}', '{{ $record->conclusions }}', '{{ $record->recommendations }}', '{{ $record->difficulties }}', '{{ $record->background_of_study }}')">
                                             Counseling Session {{ $loop->iteration }} - {{ $record->updated_at }}
                                         </a>
-                                        
+
                                         <!-- Modal for record details -->
                                         <div id="myModal{{ $record->id }}" class="modal">
                                             <div class="modal-content">
@@ -310,16 +321,18 @@
                         detailsWindow.document.write(`</body></html>`);
                         detailsWindow.document.close();
                     }
-                    function openModal(recordId, name, counseledBy, findings, presentConditions, conclusions, recommendations, difficulties, backgroundOfStudy) {
-        // Get the modal element
-        var modal = document.getElementById("myModal" + recordId);
 
-        // Display the modal
-        modal.style.display = "block";
+                    function openModal(recordId, name, counseledBy, findings, presentConditions, conclusions, recommendations,
+                        difficulties, backgroundOfStudy) {
+                        // Get the modal element
+                        var modal = document.getElementById("myModal" + recordId);
 
-        // Populate modal content
-        var modalContent = modal.querySelector('.modal-content');
-        modalContent.innerHTML = `
+                        // Display the modal
+                        modal.style.display = "block";
+
+                        // Populate modal content
+                        var modalContent = modal.querySelector('.modal-content');
+                        modalContent.innerHTML = `
             <span class="close" onclick="closeModal('${recordId}')">&times;</span>
             <h2>Counseling Record of: ${name}</h2>
             <div id="recordDetails${recordId}" class="mt-2 p-4 border border-gray-300 rounded-lg shadow-lg bg-white">
@@ -361,37 +374,37 @@
                     </div>
                 </dl>
             </div>`;
-    }
+                    }
 
-    function closeModal(recordId) {
-        // Get the modal element
-        var modal = document.getElementById("myModal" + recordId);
+                    function closeModal(recordId) {
+                        // Get the modal element
+                        var modal = document.getElementById("myModal" + recordId);
 
-        // Hide the modal
-        modal.style.display = "none";
-    }
+                        // Hide the modal
+                        modal.style.display = "none";
+                    }
 
-    // Close the modal if the user clicks outside of it
-    window.onclick = function (event) {
-        if (event.target.className === "modal") {
-            event.target.style.display = "none";
-        }
-    };
+                    // Close the modal if the user clicks outside of it
+                    window.onclick = function(event) {
+                        if (event.target.className === "modal") {
+                            event.target.style.display = "none";
+                        }
+                    };
 
-         function showAddRecordForm(studentId) {
-            // Check if the modal container already exists
-            var modal = document.getElementById('addRecordModal');
+                    function showAddRecordForm(studentId) {
+                        // Check if the modal container already exists
+                        var modal = document.getElementById('addRecordModal');
 
-            // If the modal doesn't exist, create and append it to the body
-            if (!modal) {
-                modal = document.createElement('div');
-                modal.className = 'modal-container';
-                modal.id = 'addRecordModal';
-                document.body.appendChild(modal);
-            }
+                        // If the modal doesn't exist, create and append it to the body
+                        if (!modal) {
+                            modal = document.createElement('div');
+                            modal.className = 'modal-container';
+                            modal.id = 'addRecordModal';
+                            document.body.appendChild(modal);
+                        }
 
-            // Include styles directly in the HTML
-            modal.innerHTML = `
+                        // Include styles directly in the HTML
+                        modal.innerHTML = `
                 <div class="modal-content-container">
                     <span class="modal-close" onclick="closeAddRecordModal()">&times;</span>
                     <form action="{{ route('counseling-records.create') }}?studentId=${studentId}" method="GET">
@@ -439,27 +452,25 @@
                 </div>
             `;
 
-            // Display the modal
-            modal.style.display = 'flex';
-        }
+                        // Display the modal
+                        modal.style.display = 'flex';
+                    }
 
-        function closeAddRecordModal() {
-            var modal = document.getElementById('addRecordModal');
-            if (modal) {
-                modal.style.display = 'none';
-            }
-        }
+                    function closeAddRecordModal() {
+                        var modal = document.getElementById('addRecordModal');
+                        if (modal) {
+                            modal.style.display = 'none';
+                        }
+                    }
 
-        // Close the modal if the user clicks outside of it
-        window.onclick = function (event) {
-            var modal = document.getElementById('addRecordModal');
-            if (modal && event.target === modal) {
-                closeAddRecordModal();
-            }
-        };
-    </script>
-
-
+                    // Close the modal if the user clicks outside of it
+                    window.onclick = function(event) {
+                        var modal = document.getElementById('addRecordModal');
+                        if (modal && event.target === modal) {
+                            closeAddRecordModal();
+                        }
+                    };
+                </script>
             @else
                 <p></p>
             @endif

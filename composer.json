@@ -6,6 +6,7 @@
     "license": "MIT",
     "require": {
         "php": "^8.1",
+        "barryvdh/laravel-dompdf": "^2.0",
         "cohensive/oembed": "^0.17.0",
         "embed/embed": "^4.4",
         "guzzlehttp/guzzle": "^7.2",

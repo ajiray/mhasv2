@@ -19,6 +19,7 @@ class Appointment extends Model
         'reason',
         'status',
         'counselor_id',
+        'recording',
     ];
 
     public function user()

@@ -7,7 +7,7 @@
         <h1
             class="text-5xl font-extrabold mb-6 text-slate-800 tracking-wide uppercase text-center animate__animated animate__fadeInDown">
             Welcome to MindScape,
-            {{ strtoupper(explode(' ', auth()->user()->name)[0]) }}!
+            {{ strtoupper(explode(' ', auth()->user()->firstname)[0]) }}!
         </h1>
 
         <div class="text-xl mb-8 w-3/4 text-center">

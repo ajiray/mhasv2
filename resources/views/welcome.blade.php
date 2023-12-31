@@ -10,15 +10,17 @@
         integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
     @vite('resources/css/app.css')
-<link rel="icon" href="public/images/logo.ico" type="image/x-icon">
+    <link rel="icon" href="public/images/logo.ico" type="image/x-icon">
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
-    integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
-    crossorigin="anonymous" referrerpolicy="no-referrer" />
+        integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@100&family=Montserrat:ital,wght@0,500;1,400&family=Roboto+Slab&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Kanit:wght@100&family=Montserrat:ital,wght@0,500;1,400&family=Roboto+Slab&display=swap"
+        rel="stylesheet">
 
     <style>
         @keyframes float {
@@ -32,54 +34,63 @@
                 transform: translateY(-10px);
             }
         }
+
         .floating-element {
             animation: float 2s ease-in-out infinite;
         }
+
         .gradient {
             background-image: radial-gradient(circle farthest-corner at 10% 20%, rgba(147, 67, 67, 1) 0%, rgba(111, 27, 27, 1) 90%);
         }
-        #scrollArrow {
-        transition: opacity 0.3s ease-in-out;
-    }
-    @keyframes fadeIn {
-        from {
-            opacity: 0;
-        }
-        to {
-            opacity: 1;
-        }
-    }
 
-    header {
-        position: fixed;
-        top: 0;
-        width: 100%;
-        z-index: 1000; /* Set a higher z-index if needed */
-        background-color: #800000; /* Adjust background color as needed */
-        animation: fadeIn 1s ease-out;
-        transition: opacity 0.3s ease-in-out;
-    }
-    .section-content {
-        margin-top: 200px;
-    }
+        #scrollArrow {
+            transition: opacity 0.3s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            /* Set a higher z-index if needed */
+            background-color: #800000;
+            /* Adjust background color as needed */
+            animation: fadeIn 1s ease-out;
+            transition: opacity 0.3s ease-in-out;
+        }
+
+        .section-content {
+            margin-top: 200px;
+        }
     </style>
 </head>
 
 <body class="overflow-x-hidden w-full flex flex-col justify-center">
-    
+
     <!--Header-->
     <header>
         <nav class="container flex items-center py-4 bg-maroon max-w-full fixed">
             <div class="py-1 flex items-center w-full">
-                <img src="/images/perpslogo.png" alt="" class="w-[100px] h-[130px] mr-4">
+                <img src="/images/perpslogo.png" alt="" class="w-[70px] h-[100px] mr-4">
                 <div class="flex flex-col">
                     <h1 class="font-roboto font-bold text-perpetualyellow text-[20px] mt-0">UNIVERSITY OF</h1>
                     <h1 class="font-roboto font-bold text-perpetualyellow text-[30px] mt-[-10px]">PERPETUAL HELP</h1>
-                    <h1 class="font-roboto font-bold text-perpetualyellow text-[20px] mt-[-10px]">SYSTEM DALTA LAS PINAS CAMPUS</h1>
+                    <h1 class="font-roboto font-bold text-perpetualyellow text-[20px] mt-[-10px]">SYSTEM DALTA LAS PINAS
+                        CAMPUS</h1>
                 </div>
             </div>
-            
-            
+
+
             <ul class="hidden sm:flex flex-1 justify-end items-center gap-12 text-white uppercase text-xs mr-10"
                 id="menuList">
                 <li class="cursor-pointer dark:hover:text-yellow"><a href="#features">Features</a></li>
@@ -92,7 +103,7 @@
                     @else
                         <a href="{{ route('login') }}"
                             class="font-semibold bg-perpetualyellow text-maroon rounded-md px-7 py-3 uppercase dark:hover:text-white ">Login</a>
-                       
+
                     @endauth
                 @endif
             </ul>
@@ -111,7 +122,7 @@
                         @else
                             <a href="{{ route('login') }}"
                                 class="font-semibold bg-white text-maroon mt-4 rounded-md px-4 py-1 uppercase">Log in</a>
-                        
+
                         @endauth
                     @endif
                 </ul>
@@ -130,7 +141,8 @@
         <div class="container flex flex-col-reverse lg:flex-row items-center gap-12 mt-14 lg:mt-28">
             <!-- Content -->
             <div class="flex flex-1 flex-col items-center lg:items-start floating-element" data-aos="zoom-in">
-                <h2 class="text-maroon text-3xl md:text-4 lg:text-5xl text-center lg:text-left mb-6 font-roboto font-bold">
+                <h2
+                    class="text-maroon text-3xl md:text-4 lg:text-5xl text-center lg:text-left mb-6 font-roboto font-bold">
                     MindScape
                 </h2>
                 <p class="text-black text-lg text-center lg:text-left mb-6">
@@ -298,7 +310,8 @@
         </div>
     </section>
     <!-- About -->
-    <section class="h-[1000px] xl:h-[600px] bg-pink w-full flex justify-center items-center section-content" id="about">
+    <section class="h-[1000px] xl:h-[600px] bg-pink w-full flex justify-center items-center section-content"
+        id="about">
 
         <div class="flex-col container mx-auto flex items-center justify-between xl:p-8 xl:flex-row mt-36">
             <!-- About Text -->
@@ -324,9 +337,7 @@
     </section>
 
 
-    <section
-        class="py-20 w-full h-[1000px] flex items-center justify-center bg-gradient-to-b from-slate-200 via-slate-100 to-slate-300 relative section-content" 
-        id="contact">
+    <section class="py-20 w-full h-[1000px] flex items-center justify-center relative section-content" id="contact">
         @if (session()->has('success'))
             <div class="absolute top-10 left-0 right-0 flex items-center justify-center w-full p-4 md:w-96 md:p-6"
                 id="alert">
@@ -412,7 +423,8 @@
     </footer>
 
 </body>
-<div id="scrollArrowContainer" class="fixed bottom-8 right-8 cursor-pointer opacity-0 transition-opacity duration-300 hidden md:block z-50">
+<div id="scrollArrowContainer"
+    class="fixed bottom-8 right-8 cursor-pointer opacity-0 transition-opacity duration-300 hidden md:block z-50">
     <div class="bg-maroon p-2 rounded-xl">
         <i class="text-3xl text-white fas fa-chevron-up"></i>
     </div>
@@ -442,23 +454,24 @@
 
     // Call the fadeOutAlert function for each alert message
     fadeOutAlert("alert");
-    
-    document.addEventListener("DOMContentLoaded", function () {
+
+    document.addEventListener("DOMContentLoaded", function() {
         var scrollArrowContainer = document.getElementById("scrollArrowContainer");
 
         function toggleScrollArrow() {
-            if (document.body.scrollTop > window.innerHeight / 2 || document.documentElement.scrollTop > window.innerHeight / 2) {
+            if (document.body.scrollTop > window.innerHeight / 2 || document.documentElement.scrollTop > window
+                .innerHeight / 2) {
                 scrollArrowContainer.style.opacity = "1";
             } else {
                 scrollArrowContainer.style.opacity = "0";
             }
         }
 
-        window.onscroll = function () {
+        window.onscroll = function() {
             toggleScrollArrow();
         };
 
-        scrollArrowContainer.addEventListener("click", function () {
+        scrollArrowContainer.addEventListener("click", function() {
             window.scrollTo({
                 top: 0,
                 behavior: "smooth",

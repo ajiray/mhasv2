@@ -169,48 +169,7 @@
                 </div>
             </div>
         </section>
-        <section class="relative mt-[500px] mx-auto">
-            <h1 id="h11" class="text-center text-4xl font-bold">Posts</h1>
-            @foreach ($posts->sortByDesc('id') as $post)
-                <!-- Author info -->
-                <div class="card">
-                    <div class="card1">
-                        <div class="flex items-center space-x-2">
-                            @if ($post->anonymous)
-                                <h1 class="text-lg font-semibold text-blue-500">Anonymous User</h1>
-                            @else
-                                <img src="{{ asset('public/storage/app/public/users-avatar/' . $post->user->avatar) }}"
-                                    width="40" height="40" alt="author profile" class="rounded-full">
-                                <h1 class="text-lg font-semibold text-blue-500">{{ $post->user->name }}</h1>
-                            @endif
-                            <p class="text-gray-500">created at {{ $post->created_at->format('M d, Y \a\t H:i A') }}
-                            </p>
-                        </div>
-                        <div
-                            class="flex absolute items-center space-x-2 ml-[320px] mt-[20px] lg:mt-[-30px] md:mt-[-30px] md:ml-[600px]">
-                            @auth
-                                @if (auth()->user()->id === $post->user->id)
-                                    <button onclick="confirmDeletePost('{{ $post->id }}')"
-                                        class="material-symbols-outlined text-red-600">
-                                        Delete
-                                    </button>
-                                    <form id="delete-form-{{ $post->id }}" action="/delete-post-profile/{{ $post->id }}"
-                                        method="POST" style="display: none;">
-                                        @csrf
-                                        @method('DELETE')
-                                    </form>
-                                @endif
-                            @endauth
-                        </div>
-                        <div class="small">
-                            {{ $post->body }}
-                        </div>
-                        <div class="go-corner">
-                        </div>
-                    </div>
-                </div>
-            @endforeach
-        </section>
+
     </body>
 
 

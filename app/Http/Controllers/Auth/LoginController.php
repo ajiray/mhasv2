@@ -47,40 +47,38 @@ class LoginController extends Controller
             'login_identifier' => 'required',
             'password' => 'required',
         ]);
-    
+
         $credentials = [
             'password' => $request->password,
         ];
-    
 
         $adminCredentials = ['email' => $request->login_identifier] + $credentials;
         $counselorCredentials = ['email' => $request->login_identifier] + $credentials;
-    
+
         if (auth()->attempt($adminCredentials + ['is_admin' => 1])) {
+            $user = auth()->user();
+            $user->update(['online' => 1]);
             return redirect('admindashboard');
         }
-    
+
         if (auth()->attempt($counselorCredentials + ['is_admin' => 2])) {
+            $user = auth()->user();
+            $user->update(['online' => 1]);
             return redirect('guidancedashboard');
         }
-    
-    
+
         $studentCredentialsByNumber = ['is_admin' => 0, 'password' => $request->password, 'student_number' => $request->login_identifier] + $credentials;
-    
+
         if (auth()->attempt($studentCredentialsByNumber)) {
             $user = auth()->user();
-    
-            
+
             if ($user->first_login) {
-             
                 return redirect()->route('password.change');
             }
-    
-         
+
             return redirect('dashboard');
         }
-    
-       
+
         return redirect()->route('login')->with('status', 'Invalid login credentials');
     }
     

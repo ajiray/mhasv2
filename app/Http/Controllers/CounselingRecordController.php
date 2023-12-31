@@ -79,7 +79,7 @@ public function create(Request $request)
     $counselingRecord->recommendations = $validatedData['recommendations'];
     $counselingRecord->difficulties = $validatedData['difficulties'];
     $counselingRecord->background_of_study = $validatedData['backgroundOfStudy'];
-    $counselingRecord->counseled_by = $user->name;
+    $counselingRecord->counseled_by = $user->firstname;
     // Set other fields accordingly
 
     $counselingRecord->save();

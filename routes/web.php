@@ -10,10 +10,13 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\EventController;
 use App\Http\Controllers\ChatBotController;
 use App\Http\Controllers\MeetingController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\SummaryController;
 use App\Http\Controllers\resourceController;
+use App\Http\Controllers\CounselorController;
 use App\Http\Controllers\AppointmentController;
 use App\Http\Controllers\ForgetPasswordManager;
 use App\Http\Controllers\NotificationController;
@@ -52,6 +55,11 @@ Route::get('/resources', [HomeController::class, 'resources'])->middleware('is_s
 Route::get('/wall', [HomeController::class, 'wall'])->middleware('is_student');
 Route::get('/messageOption', [HomeController::class, 'messageOption'])->middleware('is_student');
 Route::get('/messagegoback',[HomeController::class, 'messagegoback'])->middleware('is_student');
+Route::get('/events', [EventController::class, 'index'])->name('events.index');
+Route::get('/events/{id}', [EventController::class, 'show'])->name('events.show');
+Route::get('/counselors', [CounselorController::class, 'index']);
+Route::patch('/counselors/{counselor}', [CounselorController::class, 'updateOnlineStatus'])->name('counselors.updateOnlineStatus');
+Route::get('/chatcounselor/{user_id}', [CounselorController::class, 'chatcounselor'])->name('chatcounselor');
  
 //admin side
 Route::get('/admindashboard', [App\Http\Controllers\HomeController::class, 'adminHome'])->name('admindashboard')->middleware('is_admin');
@@ -66,6 +74,11 @@ Route::post('/registerGuidance', [HomeController::class, 'registerGuidance'])->m
 Route::get('/addstudents', [App\Http\Controllers\HomeController::class, 'addstudents'])->name('addstudents')->middleware('is_admin');
 Route::post('/registerstudent', [HomeController::class, 'registerstudent'])->middleware('is_admin');
 Route::get('/adminaddnewstudent', [App\Http\Controllers\HomeController::class, 'addstudents'])->middleware('is_admin');
+Route::get('/summary', [App\Http\Controllers\HomeController::class, 'summary'])->middleware('is_admin');
+Route::get('/events', [EventController::class, 'showadminevent'])->middleware('is_admin');
+Route::post('/events.store', [EventController::class, 'events'])->middleware('is_admin');
+Route::delete('/events/{id}', [EventController::class, 'destroy'])->name('events.destroy')->middleware('is_admin');
+Route::put('/events/{id}', [EventController::class, 'update'])->name('events.update')->middleware('is_admin');
 
 //counselor side
 Route::get('/guidancedashboard', [HomeController::class, 'guidancedashboard'])->name('guidancedashboard')->middleware('is_guidance');
@@ -164,3 +177,6 @@ Route::get('/main-screen',[CounselingRecordController::class,'mainScreen'])->nam
 //Contact Us
 Route::post('/contactUs', [HomeController::class, 'contactUs']);
 
+//summary 
+Route::get('/filter-summaries', [SummaryController::class, 'filterSummaries'])->name('summaries.filter');
+Route::get('/generate-pdf', [SummaryController::class, 'generatepdf'])->name('generate.pdf');

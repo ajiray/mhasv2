@@ -27,6 +27,7 @@ export default {
         pink: '#ffd7d7',
         bg1:'#AEDFF7',
         perpetualyellow:'#fccc0a',
+
       },
       screens: {
         'mobileS': '320px',

@@ -121,7 +121,7 @@
                     @if ($appointment->status === 'waiting for approval')
                         <div class="mb-4 p-4 bg-gray-100 rounded-lg shadow-md">
                             <h3 class="text-lg font-semibold">{{ $appointment->reason }}</h3>
-                            <p class="text-gray-600">Student: {{ $appointment->user->name }}</p>
+                            <p class="text-gray-600">Student: {{ $appointment->user->firstname }}</p>
                             <p class="text-gray-600">Course: {{ $appointment->user->course }}</p>
                             <p class="text-gray-600">Date:
                                 {{ \Carbon\Carbon::parse($appointment->date)->format('F j, Y') }}
@@ -184,7 +184,7 @@
                             </form>
 
                         </div>
-                        <p class="text-gray-600">Student: {{ $acceptedAppointment->appointment->user->name }}</p>
+                        <p class="text-gray-600">Student: {{ $acceptedAppointment->appointment->user->firstname }}</p>
                         <p class="text-gray-600">Course: {{ $acceptedAppointment->appointment->user->course }}</p>
                         <p class="text-gray-600">Date:
                             {{ \Carbon\Carbon::parse($acceptedAppointment->appointment->date)->format('F j, Y') }}</p>
@@ -234,29 +234,28 @@
                                 @endif
                             @else
                                 <p class="text-gray-600 font-bold">Meeting should start now</p>
-                               
-                                    <button
-                                        class="text-amber-600 bg-amber-200 px-4 py-2 rounded-xl hover:bg-amber-300 font-semibold hover:text-white hover:no-underline mt-2 w-full"
-                                        onclick="openCreateMeetingPopup('{{ $acceptedAppointment->user_id }}', '{{ $acceptedAppointment->id }}')">
-                                        Contact Student
-                                    </button>
 
-                                    <form id="createMeetingForm-{{ $acceptedAppointment->id }}"
-                                        action="{{ route('createMeeting') }}" method="POST" style="display: none;">
-                                        <input type="hidden" name="user_id" value="{{ $acceptedAppointment->user_id }}">
-                                        @csrf
-                                    </form>
+                                <button
+                                    class="text-amber-600 bg-amber-200 px-4 py-2 rounded-xl hover:bg-amber-300 font-semibold hover:text-white hover:no-underline mt-2 w-full"
+                                    onclick="openCreateMeetingPopup('{{ $acceptedAppointment->user_id }}', '{{ $acceptedAppointment->id }}')">
+                                    Contact Student
+                                </button>
+
+                                <form id="createMeetingForm-{{ $acceptedAppointment->id }}"
+                                    action="{{ route('createMeeting') }}" method="POST" style="display: none;">
+                                    <input type="hidden" name="user_id" value="{{ $acceptedAppointment->user_id }}">
+                                    @csrf
+                                </form>
 
 
-                                    <script>
-                                        function openCreateMeetingPopup(user_id, appointmentId) {
-                                            // Set the user_id and submit the form with the specific appointmentId
-                                            document.getElementById('createMeetingForm-' + appointmentId).querySelector('input[name="user_id"]').value =
-                                                user_id;
-                                            document.getElementById('createMeetingForm-' + appointmentId).submit();
-                                        }
-                                    </script>
-                                
+                                <script>
+                                    function openCreateMeetingPopup(user_id, appointmentId) {
+                                        // Set the user_id and submit the form with the specific appointmentId
+                                        document.getElementById('createMeetingForm-' + appointmentId).querySelector('input[name="user_id"]').value =
+                                            user_id;
+                                        document.getElementById('createMeetingForm-' + appointmentId).submit();
+                                    }
+                                </script>
                             @endif
                         @endif
 

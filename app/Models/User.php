@@ -29,6 +29,7 @@ class User extends Authenticatable
         'is_admin',
         'avatar',
         'first_login',
+        'online',
     ];
 
     /**
@@ -51,9 +52,14 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
-    public function feed() {
-        return $this->hasMany(Post::class, 'user_id');
+    public function summary() {
+        return $this->hasMany(Summary::class, 'student_id');
     }
+
+    public function counselorSummary()
+{
+    return $this->hasMany(Summary::class, 'counselor_id');
+}
     
     public function appointment() {
         return $this->hasMany(Appointment::class, 'counselor_id');
