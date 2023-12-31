@@ -46,8 +46,12 @@
 <body>
 
     <h1>SUMMARY REPORT</h1>
-
+    <p>Report Date: {{ $reportDate }}</p>
+    @if ($dateRange)
+        <p>Date Range: {{ $dateRange }}</p>
+    @endif
     <p>Total Appointments: {{ $totalCount }}</p>
+    <p>Most Common Reason: {{ $mostCommonReason }}</p>
 
     @if ($filteredSummaries->isEmpty())
         <p class="text-gray-600">No summary data available.</p>
@@ -67,13 +71,13 @@
                 @foreach ($filteredSummaries as $summary)
                     <tr>
                         <td>
-                            {{ $summary->student->firstname }}
+                            {{ $summary->student->name }}
                             @if ($summary->student->middlename)
                                 {{ $summary->student->middlename }}
                             @endif
                             {{ $summary->student->lastname }}
                         </td>
-                        <td>{{ $summary->counselor->firstname }}</td>
+                        <td>{{ $summary->counselor->name }}</td>
                         <td>{{ $summary->course }}</td>
                         <td>{{ $summary->reason }}</td>
                         <td>{{ $summary->type }}</td>

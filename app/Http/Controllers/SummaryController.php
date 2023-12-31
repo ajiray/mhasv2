@@ -81,14 +81,31 @@ public function generatepdf(Request $request)
     // Count the total number of filtered summaries
     $totalCount = $filteredSummaries->count();
 
+    $mostCommonReason = $filteredSummaries->groupBy('reason')
+        ->sortDesc()
+        ->keys()
+        ->first();
+
+    // Determine the date range for display
+    $dateRange = ($fromDate && $toDate) ? \Carbon\Carbon::parse($fromDate)->format('M d, Y') . ' to ' . \Carbon\Carbon::parse($toDate)->format('M d, Y') : '';
+
+
+    // Current date
+    $reportDate = now()->format('F d, Y');
+
     // Pass the data to the PDF view
     $pdf = app('dompdf.wrapper')->loadView('pdf.summary_report', [
         'filteredSummaries' => $filteredSummaries,
         'totalCount' => $totalCount,
+        'mostCommonReason' => $mostCommonReason,
+        'reportDate' => $reportDate,
+        'dateRange' => $dateRange,
     ]);
 
     // Download the PDF
     return $pdf->download('summary_report.pdf');
 }
+
+
 
 }

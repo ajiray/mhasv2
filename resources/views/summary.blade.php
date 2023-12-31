@@ -11,7 +11,7 @@
             <select name="counselorFilter" id="counselorFilter" class="w-full px-3 py-2 border rounded">
                 <option value="">All Counselors</option>
                 @foreach ($counselors as $counselor)
-                    <option value="{{ $counselor->id }}">{{ $counselor->firstname }} {{ $counselor->lastname }}</option>
+                    <option value="{{ $counselor->id }}">{{ $counselor->name }} {{ $counselor->lastname }}</option>
                 @endforeach
             </select>
         </div>
@@ -86,13 +86,13 @@
                     @foreach ($summaries as $summary)
                         <tr>
                             <td class="py-2 px-4 border-b">
-                                {{ $summary->student->firstname }}
+                                {{ $summary->student->name }}
                                 @if ($summary->student->middlename)
                                     {{ $summary->student->middlename }}
                                 @endif
                                 {{ $summary->student->lastname }}
                             </td>
-                            <td class="py-2 px-4 border-b">{{ $summary->counselor->firstname }}</td>
+                            <td class="py-2 px-4 border-b">{{ $summary->counselor->name }}</td>
                             <td class="py-2 px-4 border-b">{{ $summary->course }}</td>
                             <td class="py-2 px-4 border-b">{{ $summary->reason }}</td>
                             <td class="py-2 px-4 border-b">{{ $summary->type }}</td>
@@ -144,13 +144,13 @@
                             $.each(data.summaries, function(index, summary) {
                                 var row = '<tr>' +
                                     '<td class="py-2 px-4 border-b">' + (summary.student ? (
-                                        summary.student.firstname +
+                                        summary.student.name +
                                         (summary.student.middlename ? ' ' + summary
                                             .student.middlename : '') +
                                         ' ' + summary.student.lastname
                                     ) : '') + '</td>' +
                                     '<td class="py-2 px-4 border-b">' + (summary.counselor ?
-                                        summary.counselor.firstname : '') + '</td>' +
+                                        summary.counselor.name : '') + '</td>' +
                                     '<td class="py-2 px-4 border-b">' + summary.course +
                                     '</td>' +
                                     '<td class="py-2 px-4 border-b">' + summary.reason +
