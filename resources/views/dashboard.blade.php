@@ -271,13 +271,6 @@
             position: absolute;
         }
 
-        .fade-in-up-rotate {
-            opacity: 0;
-            font-size: 2em;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-            position: absolute;
-        }
-
         @keyframes fadeInUpRotate1 {
             0% {
                 opacity: 0;
