@@ -42,7 +42,7 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@700&family=Rubik+Scribble&display=swap');
 
-        body {
+        .first {
             font-family: 'Inter', sans-serif;
         }
 
@@ -452,13 +452,13 @@
 
     <div class="w-screen h-screen xl:w-full xl:h-full flex flex-row items-center overflow-x-hidden relative justify-center">
         <div class="w-[40%] h-full items-center justify-center flex flex-col">
-            <h1 class="text-center text-8xl text-gray-800 animate__animated animate__fadeInDown">
+            <h1 class="text-center text-8xl text-gray-800 animate__animated animate__fadeInDown first">
                 WELCOME TO MINDSCAPE <br>
             </h1>
             <p class="text-center text-xl mt-10 text-gray-700 animate__animated animate__pulse">Discover a world of
                 possibilities for your mind and soul</p>
         </div>
-        <div class="w-[40%] h-full relative">
+        <div class="w-[40%] h-full relative xl:block hidden">
             <div class="glow-background">
             </div>
             <img src="/images/bg.png" alt="" class="absolute top-40 left-24 float z-40">
